@@ -22,8 +22,6 @@ import org.assertj.core.api.JUnitSoftAssertions;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

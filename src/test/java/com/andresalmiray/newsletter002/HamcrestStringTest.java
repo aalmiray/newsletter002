@@ -40,6 +40,7 @@ public class HamcrestStringTest {
         assertThat(subject, describedAs("subject contains 'ing'", containsString("ing")));
         assertThat(subject, describedAs("subject = 'testing'", equalTo("testing")));
     }
+
     @Test
     public void allChecksOnString() {
         String subject = "something";
