@@ -1,0 +1,65 @@
+/*
+ * Copyright 2017 Andres Almiray
+ *
+ * This file is part of Andres Almiray Newsletter
+ *
+ * Andres Almiray Newsletter is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Andres Almiray Newsletter is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Andres Almiray Newsletter. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.github.ben-manes.versions' version '0.15.0'
+    id 'com.github.hierynomus.license' version '0.11.0'
+    id 'org.kordamp.gradle.stats'      version '0.2.0'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'pr', 'atlassian'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}
+
+dependencies {
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testCompile "org.assertj:assertj-core:$assertjVersion"
+    testCompile "com.google.truth:truth:$truthVersion"
+    testCompile "org.jgotesting:jgotesting:$jgotestingVersion"
+
+}
+
+license {
+    header = rootProject.file('gradle/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        fxml = 'XML_STYLE'
+    }
+    ext.year    = '2017'
+    ext.author  = 'Andres Almiray'
+    ext.project = 'Andres Almiray Newsletter'
+}
